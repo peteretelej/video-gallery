@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Video Gallery</title>
+		<script src="js/vue.js"></script>
+		<style>
+			html,
+			body {
+				background-color: #333;
+				color: #eee
+			}
+			#content {
+				display: block;
+				width: 980px;
+				max-width: 90%;
+				margin: 0 auto;
+			}
+			#feat {
+				display: block;
+				width: 100%;
+			}
+
+			#feat .video video {
+				height: auto;
+				width: 100%;
+			}
+
+			#videos {
+				display: block;
+				height: 90px;
+				margin: 10px 0;
+
+			}
+			#videos .video {
+				display: block;
+				float: left;
+				width: 150px;
+				height: 100px;
+				margin: 5px 5px;
+				overflow: hidden;
+				background-color: #000;
+				border-radius: 5px
+			}
+
+
+			#videos .video video {
+				display: block;
+				height:100px;
+				margin:0 auto;
+				opacity: 0.3;
+
+			}
+
+			#videos .video video:hover {
+				opacity: 1;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app"></div>
+
+		<script>
+			var vids = [
+				{ url: "videos/big_buck_bunny_480p_1mb.mp4" },
+				{ url: "videos/small.mp4" },
+				{ url: "videos/big_buck_bunny_480p_1mb.mp4" },
+				{ url: "videos/small.mp4" },
+			]
+		</script>
+		<script>
+			Vue.component('feat', {
+				props: ['video'],
+				template: '<div id="feat">' +
+				'<div class="video">' +
+				'<video controls>' +
+				'<source v-bind:src="video.url" type="video/mp4">' +
+				'Your browser does not support the video tag.' +
+				'</video>' +
+				'</div><!--/.video-->' +
+				'</div><!--/#feat-->',
+				created: function () {
+					console.log("feat vid: ", this.video)
+				},
+				watch: {
+					video: function () {
+
+						console.log("video", this.video.url)
+					}
+				}
+
+			})
+var vm = new Vue({
+	el: "#app",
+	template: '<div id="content">' +
+	'<feat v-bind:video="featured" v-bind:key="featured.url"></feat>' +
+	'<div id="videos">' +
+	'<div v-for="video in videos" class="video" v-bind:key="video.url">' +
+	'<video v-on:click="feature(video)">' +
+	'<source v-bind:src="video.url" type="video/mp4">' +
+	'</video>' +
+	'</div><!--/.video-->' +
+	'</div><!--/#videos-->' +
+	'</div>',
+	data: {
+		featured: "",
+		videos: []
+	},
+	created: function () {
+		this.videos = vids
+	},
+	methods: {
+		feature: function (vid) {
+			this.featured = vid
+			console.log("featured", this.featured.url)
+		}
+	}
+})
+vm.featured = vids[0]
+		</script>
+	</body>
+</html>
