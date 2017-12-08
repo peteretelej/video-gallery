@@ -101,7 +101,7 @@ var vm = new Vue({
 	'<feat v-bind:video="featured" v-bind:key="featured.url"></feat>' +
 	'<div id="videos">' +
 	'<div v-for="video in videos" class="video" v-bind:key="video.url">' +
-	'<video v-on:click="feature(video)">' +
+	'<video v-on:click="feature(video)" preload="metadata">' +
 	'<source v-bind:src="video.url" type="video/mp4">' +
 	'</video>' +
 	'</div><!--/.video-->' +
